@@ -14,27 +14,24 @@ const useStore = create(
       FavoritesList: [],
       CartList: [],
       OrderHistoryList: [],
-      addToCart: (cartItem: any) => {
+      addToCart: (cartItem: any) =>
         set(
-          produce((state: any) => {
+          produce(state => {
             let found = false;
-
             for (let i = 0; i < state.CartList.length; i++) {
-              if (state.CartList[i].id === cartItem.id) {
+              if (state.CartList[i].id == cartItem.id) {
                 found = true;
                 let size = false;
-
                 for (let j = 0; j < state.CartList[i].prices.length; j++) {
                   if (
-                    state.CartList[i].prices[j].size === cartItem.prices[0].size
+                    state.CartList[i].prices[j].size == cartItem.prices[0].size
                   ) {
                     size = true;
                     state.CartList[i].prices[j].quantity++;
                     break;
                   }
                 }
-
-                if (!size) {
+                if (size == false) {
                   state.CartList[i].prices.push(cartItem.prices[0]);
                 }
                 state.CartList[i].prices.sort((a: any, b: any) => {
@@ -49,13 +46,11 @@ const useStore = create(
                 break;
               }
             }
-
-            if (!found) {
+            if (found == false) {
               state.CartList.push(cartItem);
             }
           }),
-        );
-      },
+        ),
       calculateCartPrice: () => {
         set(
           produce((state: any) => {
@@ -140,7 +135,7 @@ const useStore = create(
           }),
         );
       },
-      increamentCartItemQuantity: (id: number, size: string) => {
+      incrementCartItemQuantity: (id: number, size: string) => {
         set(
           produce((state: any) => {
             for (let i = 0; i < state.CartList.length; i++) {
@@ -156,36 +151,36 @@ const useStore = create(
           }),
         );
       },
-      decrementCartItemQuantity: (id: string, size: string) => {
+      decrementCartItemQuantity: (id: string, size: string) =>
         set(
-          produce((state: any) => {
-            for (let i = 0; i < state.CartList.length; i++) {
-              if (state.CartList[i].id === id) {
-                for (let j = 0; j < state.CartList[i].prices.length; j++) {
-                  if (state.CartList[i].prices[j].size === size) {
-                    if (state.CartLis[i].prices.length > 1) {
-                      if (state.CartList[i].prices[j].quantity > 1) {
-                        state.CartList[i].prices[j].quantity--;
-                        break;
-                      } else {
-                        state.CartList[i].prices.splice(j, 1);
-                      }
-                    } else {
-                      if (state.CartList[i].prices[j].quantity > 1) {
-                        state.CartList[i].prices[j].quantity--;
-                        break;
-                      } else {
-                        state.CartList.splice(i, 1);
-                        break;
-                      }
-                    }
-                  }
-                }
+          produce(state => {
+            const itemIndex = state.CartList.findIndex(
+              (item: any) => item.id === id,
+            );
+            if (itemIndex === -1) return; // Item not found
+
+            const priceIndex = state.CartList[itemIndex].prices.findIndex(
+              (price: any) => price.size === size,
+            );
+            if (priceIndex === -1) return; // Size not found
+
+            const price = state.CartList[itemIndex].prices[priceIndex];
+
+            if (price.quantity > 1) {
+              // Decrement quantity
+              price.quantity--;
+            } else {
+              // Remove price
+              state.CartList[itemIndex].prices.splice(priceIndex, 1);
+
+              // If no sizes left, remove item
+              if (state.CartList[itemIndex].prices.length === 0) {
+                state.CartList.splice(itemIndex, 1);
               }
             }
           }),
-        );
-      },
+        ),
+
       addToOrderHistoryListFromCart: () => {
         set(
           produce(state => {
@@ -216,6 +211,14 @@ const useStore = create(
             }
 
             state.CartList = [];
+          }),
+        );
+      },
+      removeAllItemsFromCart: () => {
+        set(
+          produce(state => {
+            state.CartList = [];
+            state.CartPrice = 0;
           }),
         );
       },

@@ -68,7 +68,6 @@ const Home = ({navigation}: any) => {
     getCoffeeList(categoryIndex.category, coffeeList),
   );
   const tabBarHeight = useBottomTabBarHeight();
-  const heightBottomTabBar = useBottomTabBarHeight();
 
   const handleSearch = (text: string) => {
     setSearchText(text);
@@ -131,7 +130,7 @@ const Home = ({navigation}: any) => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={[
           styles.scrollViewContainer,
-          {paddingBottom: heightBottomTabBar},
+          {paddingBottom: tabBarHeight},
         ]}>
         <Header title="Home" />
 
@@ -145,7 +144,7 @@ const Home = ({navigation}: any) => {
         />
 
         {/* Coffee List */}
-        <View>
+        <View style={{paddingBottom: tabBarHeight}}>
           {/* Categories */}
           <ScrollView
             horizontal
@@ -240,10 +239,7 @@ const Home = ({navigation}: any) => {
             showsHorizontalScrollIndicator={false}
             data={BeanList}
             keyExtractor={item => item.id}
-            contentContainerStyle={[
-              styles.FlatListContainer,
-              {marginBottom: tabBarHeight, paddingBottom: 20},
-            ]}
+            contentContainerStyle={[styles.FlatListContainer]}
             renderItem={({item, index}) => (
               <TouchableOpacity
                 onPress={() =>
@@ -294,7 +290,7 @@ const styles = StyleSheet.create({
   },
   scrollViewContainer: {
     paddingHorizontal: 20,
-    flex: 1,
+    flexGrow: 1,
   },
   CategoryScrollViewStyle: {
     marginBottom: SPACING.space_20,

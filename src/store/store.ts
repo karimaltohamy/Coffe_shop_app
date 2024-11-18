@@ -180,7 +180,6 @@ const useStore = create(
             }
           }),
         ),
-
       addToOrderHistoryListFromCart: () => {
         set(
           produce(state => {

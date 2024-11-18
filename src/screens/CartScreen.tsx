@@ -9,7 +9,6 @@ import PaymentFooter from '../components/PaymentFooter';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 import {TouchableOpacity} from 'react-native';
 import CartItem from '../components/CartItem';
-import {useNavigation} from '@react-navigation/native';
 import EmptyComponent from '../components/EmptyComponent';
 
 const CartScreen = ({navigation}: any) => {
@@ -83,7 +82,9 @@ const CartScreen = ({navigation}: any) => {
                 </View>
                 <PaymentFooter
                   title="Pay"
-                  onclick={() => {}}
+                  onclick={() => {
+                    navigation.push('payment');
+                  }}
                   price={CartPrice}
                   currency={'$'}
                 />

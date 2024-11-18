@@ -85,12 +85,14 @@ const ImageBackgroundInfo: React.FC<Props> = ({
             </View>
           ) : (
             <View style={styles.disableBackHandlerRow}>
-              <TouchableOpacity onPress={BackHandler}>
+              <TouchableOpacity onPress={ToggleFavourite}>
                 <GradientBGIcon>
                   <MaterialIcons
-                    name="favorite-border"
+                    name={favourite ? 'favorite' : 'favorite-border'}
                     size={24}
-                    color={COLORS.primaryWhiteHex}
+                    color={
+                      favourite ? COLORS.primaryRedHex : COLORS.primaryWhiteHex
+                    }
                   />
                 </GradientBGIcon>
               </TouchableOpacity>
@@ -177,15 +179,14 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     aspectRatio: 20 / 25,
   },
-
   enableBackHandlerRow: {
-    paddingHorizontal: SPACING.space_20,
+    padding: SPACING.space_20,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
   disableBackHandlerRow: {
-    paddingHorizontal: SPACING.space_20,
+    padding: SPACING.space_20,
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',

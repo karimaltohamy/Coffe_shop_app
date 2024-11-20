@@ -1,7 +1,6 @@
 import {
   Dimensions,
   FlatList,
-  ImageProps,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -116,7 +115,6 @@ const Home = ({navigation}: any) => {
       prices,
     });
     calculateCartPrice();
-    navigation.navigate('Cart');
   };
 
   return (

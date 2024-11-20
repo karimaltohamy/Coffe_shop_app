@@ -83,7 +83,10 @@ const CartScreen = ({navigation}: any) => {
                 <PaymentFooter
                   title="Pay"
                   onclick={() => {
-                    navigation.push('payment');
+                    navigation.push('payment', {
+                      amount: CartPrice,
+                      currency: '$',
+                    });
                   }}
                   price={CartPrice}
                   currency={'$'}

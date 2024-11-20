@@ -53,22 +53,20 @@ const useStore = create(
         ),
       calculateCartPrice: () => {
         set(
-          produce((state: any) => {
-            let total = 0;
+          produce(state => {
+            let totalprice = 0;
             for (let i = 0; i < state.CartList.length; i++) {
-              let itemPrice = 0;
-
+              let tempprice = 0;
               for (let j = 0; j < state.CartList[i].prices.length; j++) {
-                itemPrice +=
+                tempprice =
+                  tempprice +
                   parseFloat(state.CartList[i].prices[j].price) *
-                  state.CartList[i].prices[j].quantity;
+                    state.CartList[i].prices[j].quantity;
               }
-
-              state.CartList[i].itemPrice = itemPrice.toFixed(2).toString();
-              total += itemPrice;
+              state.CartList[i].ItemPrice = tempprice.toFixed(2).toString();
+              totalprice = totalprice + tempprice;
             }
-
-            state.CartPrice = total.toFixed(2).toString();
+            state.CartPrice = totalprice.toFixed(2).toString();
           }),
         );
       },
@@ -183,9 +181,9 @@ const useStore = create(
       addToOrderHistoryListFromCart: () => {
         set(
           produce(state => {
-            const temp = state.CartList.reduce(
-              (acc: number, curr: any) =>
-                acc + parseFloat(curr.itemPrice.price),
+            let temp = state.CartList.reduce(
+              (accumulator: number, currentValue: any) =>
+                accumulator + parseFloat(currentValue.ItemPrice),
               0,
             );
 
